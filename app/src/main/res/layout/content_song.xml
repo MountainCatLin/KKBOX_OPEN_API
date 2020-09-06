@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.SongActivity"
+        tools:showIn="@layout/activity_playlist">
+
+        <ImageView
+            android:id="@+id/coverImageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            bind:layout_constraintTop_toTopOf="parent"
+            bind:layout_constraintBottom_toTopOf="@+id/songTextView"
+            bind:layout_constraintStart_toStartOf="parent"
+            android:scaleType="fitXY"
+            android:layout_margin="8dp"
+            />
+
+        <TextView
+                android:id="@+id/songTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/song_list"
+                android:textSize="20dp"
+                android:layout_margin="8dp"
+                android:textStyle="bold"
+                />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/viewSongs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/songTextView" />
+    </LinearLayout>
+</layout>

@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">KKBOX_Open_API</string>
+    <string name="tab_text_1">1000x1000</string>
+    <string name="tab_text_2">300x300</string>
+    <string name="title_activity_song">SongActivity</string>
+    <string name="song_list">歌曲列表</string>
+</resources>

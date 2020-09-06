@@ -1,0 +1,2 @@
+include ':app', ':OpenAPIDeveloperLibrary-debug'
+rootProject.name='KKBOX_Open_API'

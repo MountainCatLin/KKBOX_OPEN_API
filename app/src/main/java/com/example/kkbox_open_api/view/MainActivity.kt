@@ -1,0 +1,51 @@
+package com.example.kkbox_open_api.view
+
+import android.content.res.AssetManager
+import android.os.Bundle
+import android.util.Log
+import com.google.android.material.tabs.TabLayout
+import androidx.viewpager.widget.ViewPager
+import androidx.appcompat.app.AppCompatActivity
+import com.example.kkbox_open_api.R
+import com.example.kkbox_open_api.AppInfo.GAN_MODEL_FILE_NAME
+import org.tensorflow.lite.Interpreter
+import java.io.FileInputStream
+import java.nio.MappedByteBuffer
+import java.nio.channels.FileChannel
+
+class MainActivity : AppCompatActivity() {
+    companion object {
+        var interpreter : Interpreter? = null
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        val sectionsPagerAdapter =
+            SectionsPagerAdapter(this, supportFragmentManager)
+        val viewPager: ViewPager = findViewById(R.id.view_pager)
+        viewPager.adapter = sectionsPagerAdapter
+        val tabs: TabLayout = findViewById(R.id.tabs)
+        tabs.setupWithViewPager(viewPager)
+
+        try {
+            val model = loadModelFile(assets, GAN_MODEL_FILE_NAME)
+            val options = Interpreter.Options()
+            options.setUseNNAPI(true)
+            interpreter = Interpreter(model)
+
+        } catch (e: Exception) {
+            Log.d("KKBOX", "tf lite file error")
+            throw RuntimeException(e)
+        }
+    }
+
+    private fun loadModelFile(assets: AssetManager, modelFilename: String): MappedByteBuffer {
+        val fileDescriptor = assets.openFd(modelFilename)
+        val inputStream = FileInputStream(fileDescriptor.fileDescriptor)
+        val fileChannel = inputStream.channel
+        val startOffset = fileDescriptor.startOffset
+        val declaredLength = fileDescriptor.declaredLength
+        return fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, declaredLength)
+    }
+}

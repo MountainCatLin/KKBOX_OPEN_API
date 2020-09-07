@@ -4,9 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-
-const val HIGH_RESOLUTION = "1000x1000"
-const val LOW_RESOLUTION = "300x300"
+import com.example.kkbox_open_api.AppInfo.HIGH_RESOLUTION
+import com.example.kkbox_open_api.AppInfo.LOW_RESOLUTION
 
 class PageViewModel : ViewModel() {
     private val resolutions = arrayOf(HIGH_RESOLUTION, LOW_RESOLUTION)

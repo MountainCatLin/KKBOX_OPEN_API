@@ -49,12 +49,10 @@ fun bindImage(imageView: ImageView, imageUrl: String) {
                     try {
                         MainActivity.interpreter?.run(byteBufferData, outByteBufferData)
                         generatedByGANImage = getOutputImage()
-
                     } catch (e: Exception) {
                         throw RuntimeException(e)
                     }
                     imageView.setImageBitmap(generatedByGANImage)
-
                 }
                 override fun onLoadCleared(placeholder: Drawable?) {
                     Log.d("kkbox", "Glide onLoadCleared")

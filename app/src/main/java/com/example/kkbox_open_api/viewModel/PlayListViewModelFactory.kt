@@ -11,5 +11,4 @@ class PlayListViewModelFactory(private val playListRepository: IPlayListReposito
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
-
 }

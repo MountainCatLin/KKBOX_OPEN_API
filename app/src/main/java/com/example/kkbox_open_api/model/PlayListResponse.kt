@@ -15,7 +15,6 @@ class PlayListResponse {
 
 @BindingAdapter("songImageUrl")
 fun bindSongImage(imageView: ImageView, imageUrl: String) {
-
     Ion.with(imageView)
         .load(imageUrl)
 }

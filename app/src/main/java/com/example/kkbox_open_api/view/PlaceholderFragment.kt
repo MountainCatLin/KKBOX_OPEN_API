@@ -24,7 +24,6 @@ import com.example.kkbox_open_api.viewModel.PlayListsViewModelFactory
 import com.kkbox.openapideveloper.api.Api
 import com.kkbox.openapideveloper.auth.Auth
 
-
 /**
  * A placeholder fragment containing a simple view.
  */

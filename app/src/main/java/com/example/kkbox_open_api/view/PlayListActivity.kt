@@ -68,7 +68,6 @@ class PlayListActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         })
-
     }
 
 }

@@ -13,6 +13,5 @@ class SongActivity : AppCompatActivity() {
         setContentView(R.layout.activity_song)
         val myWebView: WebView = findViewById(R.id.webview)
         myWebView.loadUrl(intent.getStringExtra("songUrl"))
-
     }
 }

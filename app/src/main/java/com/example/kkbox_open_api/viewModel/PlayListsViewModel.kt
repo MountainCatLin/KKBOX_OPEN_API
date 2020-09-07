@@ -12,7 +12,6 @@ class PlayListsViewModel(private val playListsRepository: IPlayListsRepository):
     var listLiveData : MutableLiveData<ArrayList<PlayListsResponse>> = MutableLiveData()
     var openPlayListEvent: MutableLiveData<Event<String>> = MutableLiveData()
 
-
     fun getPlayLists(api: Api, offset: Int, limit: Int, resolution: String) {
         playListsRepository.getPlayLists(api, offset, limit, resolution, object :
             IPlayListsRepository.LoadPlayListsCallback {

@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kkbox_open_api.model.PlayListsResponse
 import com.example.kkbox_open_api.databinding.PlaylistsItemBinding
 
-
 class PlayListsAdaptor(private val viewModel: PlayListsViewModel) :
     RecyclerView.Adapter<PlayListsAdaptor.ViewHolder>() {
 

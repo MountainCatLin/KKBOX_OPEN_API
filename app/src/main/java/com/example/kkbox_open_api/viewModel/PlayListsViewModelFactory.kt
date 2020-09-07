@@ -10,5 +10,4 @@ class PlayListsViewModelFactory(private val playListsRepository: IPlayListsRepos
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
-
 }

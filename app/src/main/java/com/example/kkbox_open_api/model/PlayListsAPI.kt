@@ -36,7 +36,6 @@ class PlayListsAPI: IPlayListsAPI {
             playListResponse.add(playList)
         }
 
-
         loadAPICallBack.onGetResult(playListResponse)
     }
 }

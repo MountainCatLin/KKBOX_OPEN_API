@@ -16,7 +16,6 @@ import java.nio.ByteOrder
 import java.io.File
 import java.io.FileOutputStream
 
-
 class PlayListsResponse {
     lateinit var id : String
     lateinit var title : String
@@ -35,8 +34,8 @@ fun bindImage(imageView: ImageView, imageUrl: String) {
     val splitArray = imageUrl.split("/")
     val replacedString : String = splitArray[splitArray.size - 3] + '-' + splitArray[splitArray.size - 1]
     val photoPath  = MainActivity.context!!.getExternalCacheDir()
-    var photoName =  replacedString
-    var photoFile = File(photoPath, photoName)
+    val photoName =  replacedString
+    val photoFile = File(photoPath, photoName)
 
     if (photoFile.exists()) {
         imagePath = photoFile.absoluteFile.path

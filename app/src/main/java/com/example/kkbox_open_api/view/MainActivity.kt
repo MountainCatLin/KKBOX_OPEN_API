@@ -1,5 +1,6 @@
 package com.example.kkbox_open_api.view
 
+import android.content.Context
 import android.content.res.AssetManager
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +17,7 @@ import java.nio.channels.FileChannel
 class MainActivity : AppCompatActivity() {
     companion object {
         var interpreter : Interpreter? = null
+        var context : Context? = null
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         viewPager.adapter = sectionsPagerAdapter
         val tabs: TabLayout = findViewById(R.id.tabs)
         tabs.setupWithViewPager(viewPager)
-
+        context = this
         try {
             val model = loadModelFile(assets, GAN_MODEL_FILE_NAME)
             val options = Interpreter.Options()

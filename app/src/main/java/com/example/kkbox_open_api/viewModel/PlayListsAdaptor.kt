@@ -32,7 +32,6 @@ class PlayListsAdaptor(private val viewModel: PlayListsViewModel) :
         fun bind(viewModel: PlayListsViewModel, playLists: PlayListsResponse) {
             binding.playListsViewModel = viewModel
             binding.playLists = playLists
-            val d = binding.title.text
             binding.executePendingBindings()
         }
 

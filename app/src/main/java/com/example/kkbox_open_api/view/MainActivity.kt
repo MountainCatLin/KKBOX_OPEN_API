@@ -9,15 +9,18 @@ import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kkbox_open_api.R
 import com.example.kkbox_open_api.AppInfo.GAN_MODEL_FILE_NAME
+import kotlinx.coroutines.asCoroutineDispatcher
 import org.tensorflow.lite.Interpreter
 import java.io.FileInputStream
 import java.nio.MappedByteBuffer
 import java.nio.channels.FileChannel
+import java.util.concurrent.Executors
 
 class MainActivity : AppCompatActivity() {
     companion object {
         var interpreter : Interpreter? = null
         var context : Context? = null
+        val inferenceThread = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,10 +37,10 @@ class MainActivity : AppCompatActivity() {
             val model = loadModelFile(assets, GAN_MODEL_FILE_NAME)
             val options = Interpreter.Options()
             options.setUseNNAPI(true)
-            interpreter = Interpreter(model)
-
+            options.setNumThreads(10)
+            interpreter = Interpreter(model, options)
         } catch (e: Exception) {
-            Log.d("KKBOX", "tf lite file error")
+            Log.d("KKBOXLOG", "tf lite file error")
             throw RuntimeException(e)
         }
     }

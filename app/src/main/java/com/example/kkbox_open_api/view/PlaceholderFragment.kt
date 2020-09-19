@@ -1,6 +1,7 @@
 package com.example.kkbox_open_api.view
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kkbox_open_api.*
@@ -23,6 +24,7 @@ import com.example.kkbox_open_api.viewModel.PlayListsViewModel
 import com.example.kkbox_open_api.viewModel.PlayListsViewModelFactory
 import com.kkbox.openapideveloper.api.Api
 import com.kkbox.openapideveloper.auth.Auth
+import java.util.concurrent.CopyOnWriteArrayList
 
 /**
  * A placeholder fragment containing a simple view.
@@ -39,20 +41,15 @@ class PlaceholderFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        pageViewModel = ViewModelProviders.of(this).get(PageViewModel::class.java).apply {
+        pageViewModel = ViewModelProvider(this).get(PageViewModel::class.java).apply {
             setIndex(arguments?.getInt(ARG_SECTION_NUMBER) ?: 1)
         }
-        auth = Auth(
-            CLIENT_ID,
-            CLIENT_SECRET, requireContext())
+        auth = Auth(CLIENT_ID, CLIENT_SECRET, requireContext())
         accessToken = auth.clientCredentialsFlow.fetchAccessToken().get().get("access_token").asString
         api = Api(accessToken, "TW", requireContext())
         val playListsAPI = PlayListsAPI()
         val playListsRepository = PlayListsRepository(playListsAPI)
-        playListsViewModel =
-            ViewModelProviders.of(this,
-                PlayListsViewModelFactory(playListsRepository)
-            ).get(PlayListsViewModel::class.java)
+        playListsViewModel = ViewModelProvider(this, PlayListsViewModelFactory(playListsRepository)).get(PlayListsViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -64,11 +61,37 @@ class PlaceholderFragment : Fragment() {
         pageViewModel.text.observe(this, Observer<String> {
             textView.text = it
             playListsViewModel.getPlayLists(api, 0, 10, it)
-            adapter = PlayListsAdaptor(playListsViewModel)
             val recyclerView: RecyclerView = root.findViewById(R.id.viewPlayLists)
             recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            adapter = PlayListsAdaptor(playListsViewModel)
             recyclerView.adapter = adapter
 
+            playListsViewModel.listLiveData.observe(this,
+                Observer<ArrayList<PlayListsResponse>> {
+                    adapter.list = it
+                    recyclerView.post {
+                        adapter.notifyDataSetChanged()
+                        isLoading = false
+                    }
+                })
+
+            playListsViewModel.imageLiveData.observe(this,
+                Observer<CopyOnWriteArrayList<Bitmap>> {
+                    adapter.imageList = it
+                    recyclerView.post {
+                        adapter.notifyDataSetChanged()
+                        isLoading = false
+                    }
+                })
+
+            playListsViewModel.openPlayListEvent.observe(this, Observer { event ->
+                event.getContentIfNotHandled()?.let {
+                    val playListId = it
+                    val intent = Intent(activity, PlayListActivity::class.java)
+                    intent.putExtra("playListId", playListId)
+                    startActivity(intent)
+                }
+            })
 
             recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -82,24 +105,6 @@ class PlaceholderFragment : Fragment() {
                             playListsViewModel.getPlayLists(api, adapter.itemCount, 10, it)
                         }
                     }
-                }
-            })
-
-            playListsViewModel.listLiveData.observe(this,
-                Observer<ArrayList<PlayListsResponse>> {
-                    recyclerView.post {
-                        adapter.notifyDataSetChanged()
-                        isLoading = false
-                    }
-                })
-
-
-            playListsViewModel.openPlayListEvent.observe(this, Observer { event ->
-                event.getContentIfNotHandled()?.let {
-                    val playListId = it
-                    val intent = Intent(activity, PlayListActivity::class.java)
-                    intent.putExtra("playListId", playListId)
-                    startActivity(intent)
                 }
             })
         })

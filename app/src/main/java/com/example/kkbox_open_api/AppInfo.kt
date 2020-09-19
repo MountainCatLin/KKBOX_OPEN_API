@@ -14,4 +14,6 @@ object AppInfo {
     const val LOW_RESOLUTION = "300x300"
     const val HIGH_WIDTH = "1000"
     const val LOW_WIDTH = "300"
+    //For blank image
+    const val WHITE_IMAGE_SIZE = 100
 }

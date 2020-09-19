@@ -27,7 +27,7 @@ import java.util.concurrent.Executors
 
 class PlayListActivity : AppCompatActivity() {
     companion object {
-        val inferenceThread = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
+        val inferenceThread = Executors.newFixedThreadPool(10).asCoroutineDispatcher()
     }
     private lateinit var playListViewModel: PlayListViewModel
     private lateinit var auth: Auth

@@ -12,7 +12,6 @@ class PlayListsResponse {
     lateinit var imageUrl : String
 }
 
-
 @BindingAdapter("playListImageBitmap")
 fun bindPlayListImage(iv: ImageView, bitmap: Bitmap) {
     iv.setImageBitmap(bitmap)

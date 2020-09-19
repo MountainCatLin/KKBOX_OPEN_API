@@ -76,7 +76,6 @@ class PlayListsViewModel(private val playListsRepository: IPlayListsRepository):
                         imageArray.add(generatedByGANImage)
                         imageLiveData.postValue(imageArray)
                         saveBitmapToFile(generatedByGANImage, photoPath, photoName)
-
                     } catch (e: Exception) {
                         Log.i("KKBOXLOG", "GAN model prediction failed")
                         throw RuntimeException(e)

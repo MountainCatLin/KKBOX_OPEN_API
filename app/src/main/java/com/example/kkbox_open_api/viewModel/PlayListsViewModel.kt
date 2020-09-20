@@ -44,9 +44,10 @@ class PlayListsViewModel(private val playListsRepository: IPlayListsRepository):
     suspend fun getData(playListsResponse : ArrayList<PlayListsResponse>) = withContext(MainActivity.inferenceThread) {
         playListsResponseArray.addAll(playListsResponse)
         listLiveData.postValue(playListsResponseArray)
-        val playListsResponseThreadArray = CopyOnWriteArrayList<PlayListsResponse>(playListsResponse)
-        for (response in playListsResponseThreadArray) {
-            val imageUrl = response.imageUrl
+
+        val playListsResponseTmpArray = CopyOnWriteArrayList<PlayListsResponse>(playListsResponse)
+        playListsResponseTmpArray.stream().forEach {
+            val imageUrl = it!!.imageUrl
             lateinit var imagePath: String
             val splitArray = imageUrl.split("/")
             val replacedString: String =

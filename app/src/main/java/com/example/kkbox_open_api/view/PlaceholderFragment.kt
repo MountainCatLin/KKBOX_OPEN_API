@@ -60,6 +60,7 @@ class PlaceholderFragment : Fragment() {
         val textView: TextView = root.findViewById(R.id.section_label)
         pageViewModel.text.observe(this, Observer<String> {
             textView.text = it
+            isLoading = true
             playListsViewModel.getPlayLists(api, 0, 10, it)
             val recyclerView: RecyclerView = root.findViewById(R.id.viewPlayLists)
             recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)

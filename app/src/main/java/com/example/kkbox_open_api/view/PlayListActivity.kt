@@ -21,14 +21,9 @@ import com.example.kkbox_open_api.viewModel.PlayListViewModelFactory
 import com.kkbox.openapideveloper.api.Api
 import com.kkbox.openapideveloper.auth.Auth
 import com.koushikdutta.ion.Ion
-import kotlinx.coroutines.asCoroutineDispatcher
 import java.util.concurrent.CopyOnWriteArrayList
-import java.util.concurrent.Executors
 
 class PlayListActivity : AppCompatActivity() {
-    companion object {
-        val inferenceThread = Executors.newFixedThreadPool(10).asCoroutineDispatcher()
-    }
     private lateinit var playListViewModel: PlayListViewModel
     private lateinit var auth: Auth
     private lateinit var accessToken: String

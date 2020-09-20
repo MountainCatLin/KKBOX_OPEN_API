@@ -10,8 +10,7 @@ import com.example.kkbox_open_api.model.IPlayListsRepository
 import com.example.kkbox_open_api.model.PlayListsResponse
 import com.example.kkbox_open_api.view.MainActivity
 import com.kkbox.openapideveloper.api.Api
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import java.io.File
 import java.io.FileOutputStream
 import java.nio.ByteBuffer
@@ -71,8 +70,8 @@ class PlayListsViewModel(private val playListsRepository: IPlayListsRepository):
                     outByteBufferData!!.order(ByteOrder.nativeOrder())
                     try {
                         MainActivity.interpreter?.run(byteBufferData, outByteBufferData)
-                        val generatedByGANImage = getOutputImage(outByteBufferData)
                         Log.i("KKBOXLOG", "GAN model runs in " + Thread.currentThread().name)
+                        val generatedByGANImage = getOutputImage(outByteBufferData)
                         imageArray.add(generatedByGANImage)
                         imageLiveData.postValue(imageArray)
                         saveBitmapToFile(generatedByGANImage, photoPath, photoName)

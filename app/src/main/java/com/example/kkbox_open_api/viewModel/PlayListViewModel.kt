@@ -7,8 +7,8 @@ import com.example.kkbox_open_api.view.Event
 import com.example.kkbox_open_api.model.IPlayListRepository
 import com.example.kkbox_open_api.model.PlayListResponse
 import com.example.kkbox_open_api.view.MainActivity
-import com.example.kkbox_open_api.view.PlayListActivity
 import com.kkbox.openapideveloper.api.Api
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.concurrent.CopyOnWriteArrayList
@@ -34,7 +34,7 @@ class PlayListViewModel(private val playListRepository: IPlayListRepository): Vi
         openSongEvent.value = Event(url)
     }
 
-    suspend fun getData(playListResponse: ArrayList<PlayListResponse>) = withContext(PlayListActivity.inferenceThread) {
+    suspend fun getData(playListResponse: ArrayList<PlayListResponse>) = withContext(Dispatchers.IO) {
         listLiveData.postValue(playListResponse)
         val playListsResponseThreadArray = CopyOnWriteArrayList<PlayListResponse>(playListResponse)
         for (response in playListsResponseThreadArray) {

@@ -1,8 +1,8 @@
 package com.example.kkbox_open_api.model
 
-import android.graphics.Bitmap
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
+import com.koushikdutta.ion.Ion
 
 class PlayListResponse {
     lateinit var name : String
@@ -13,7 +13,8 @@ class PlayListResponse {
     lateinit var songUrl : String
 }
 
-@BindingAdapter("songImageBitmap")
-fun bindSongImage(iv: ImageView, bitmap: Bitmap) {
-    iv.setImageBitmap(bitmap)
+@BindingAdapter("songImageUrl")
+fun bindSongImage(imageView: ImageView, imageUrl: String) {
+    Ion.with(imageView)
+        .load(imageUrl)
 }

@@ -1,7 +1,6 @@
 package com.example.kkbox_open_api.view
 
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -21,7 +20,6 @@ import com.example.kkbox_open_api.viewModel.PlayListViewModelFactory
 import com.kkbox.openapideveloper.api.Api
 import com.kkbox.openapideveloper.auth.Auth
 import com.koushikdutta.ion.Ion
-import java.util.concurrent.CopyOnWriteArrayList
 
 class PlayListActivity : AppCompatActivity() {
     private lateinit var playListViewModel: PlayListViewModel
@@ -53,14 +51,6 @@ class PlayListActivity : AppCompatActivity() {
                 Ion.with(coverImageView)
                     .load(it[0].coverImageUrl)
                 adapter.list = it
-                recyclerView.post {
-                    adapter.notifyDataSetChanged()
-                }
-            })
-
-        playListViewModel.imageLiveData.observe(this,
-            Observer<CopyOnWriteArrayList<Bitmap>> {
-                adapter.imageList = it
                 recyclerView.post {
                     adapter.notifyDataSetChanged()
                 }

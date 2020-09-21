@@ -10,6 +10,10 @@
         <variable
             name="playListViewModel"
             type="com.example.kkbox_open_api.viewModel.PlayListViewModel" />
+        <variable
+            name="bitmap"
+            type="android.graphics.Bitmap" />
+
     </data>
 
     <LinearLayout
@@ -40,7 +44,7 @@
                     android:layout_marginTop="8dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:scaleType="fitXY"
-                    bind:songImageUrl="@{playList.songImageUrl}"
+                    bind:songImageBitmap="@{bitmap}"
                     bind:layout_constraintBottom_toBottomOf="parent"
                     bind:layout_constraintStart_toStartOf="parent"
                     bind:layout_constraintTop_toTopOf="parent"

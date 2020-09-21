@@ -30,7 +30,12 @@ class PlayListsViewModel(private val playListsRepository: IPlayListsRepository):
             override fun onPlayListsResult(playListsResponse: ArrayList<PlayListsResponse>) {
                 viewModelScope.launch {
                     if (offset == playListsResponseArray.size) {
-                        getData(playListsResponse)
+                        try{
+                            getData(playListsResponse)
+                        } catch (e: Exception) {
+                            Log.i("KKBOXLOG", "GAN model prediction failed")
+                            throw RuntimeException(e)
+                        }
                     }
                 }
             }
